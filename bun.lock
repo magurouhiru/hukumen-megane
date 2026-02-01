@@ -6,6 +6,7 @@
       "name": "hukumen-megane",
       "dependencies": {
         "@lingui/react": "^5.9.0",
+        "@mediapipe/tasks-vision": "^0.10.32",
         "@tanstack/react-router": "^1.157.18",
         "@tanstack/react-router-devtools": "^1.157.18",
         "react": "^19.2.0",
@@ -209,6 +210,8 @@
     "@lingui/swc-plugin": ["@lingui/swc-plugin@5.10.1", "", { "peerDependencies": { "@lingui/core": "5" } }, "sha512-3356mrBKeh+0H1JZzkkA3x0mMUHvkcPZB7QWIKcEZ7zYy+szOhth+4wbcufmOxNxmRdZnlGdVtg7BKZ/sb0ODw=="],
 
     "@lingui/vite-plugin": ["@lingui/vite-plugin@5.9.0", "", { "dependencies": { "@lingui/cli": "5.9.0", "@lingui/conf": "5.9.0" }, "peerDependencies": { "vite": "^3 || ^4 || ^5.0.9 || ^6 || ^7" } }, "sha512-qNr4UE/QZ36mo5+XVQ0hTWoQSIULoVQ2b1G+aNbGk6Z7olc8yYAtdytJyOCTEk9gCBeyMBTK7zonlxVngNsCfA=="],
+
+    "@mediapipe/tasks-vision": ["@mediapipe/tasks-vision@0.10.32", "", {}, "sha512-3tiAZnmKloYnRXYoO3dKltTUGnqeCwzC4lV03uY0vCsE+aveJTyEVQyZHOlQGQNsjK+gRHzkf9q08C99Qm2K0Q=="],
 
     "@messageformat/parser": ["@messageformat/parser@5.1.1", "", { "dependencies": { "moo": "^0.5.1" } }, "sha512-3p0YRGCcTUCYvBKLIxtDDyrJ0YijGIwrTRu1DT8gIviIDZru8H23+FkY6MJBzM1n9n20CiM4VeDYuBsrrwnLjg=="],
 

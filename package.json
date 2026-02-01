@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@lingui/react": "^5.9.0",
+    "@mediapipe/tasks-vision": "^0.10.32",
     "@tanstack/react-router": "^1.157.18",
     "@tanstack/react-router-devtools": "^1.157.18",
     "react": "^19.2.0",
