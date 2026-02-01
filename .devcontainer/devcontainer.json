@@ -1,0 +1,100 @@
+// https://containers.dev/implementors/json_reference/
+{
+  // https://containers.dev/implementors/json_reference/#general-properties
+  "name": "hukumen-megane-devcontainer",
+  "forwardPorts": [5173],
+  "portsAttributes": {
+    "5173": {
+      "label": "Vite Dev Server",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  // "otherPortsAttributes": {},
+  // "containerEnv": {},
+  // "remoteEnv": {},
+  "remoteUser": "vscode",
+  "containerUser": "vscode",
+  "updateRemoteUserUID": true,
+  // "userEnvProbe": "none",
+  // "overrideCommand ": false,
+  // "shutdownAction": "none",
+  // "init": false,
+  // "privileged": false,
+  // "capAdd": [],
+  // "securityOpt": [],
+  "mounts": [
+    {
+      "source": "hukumen-megane-devcontainer__node_modules",
+      "target": "/home/vscode/app/node_modules",
+      "type": "volume"
+    }
+  ],
+  // "features": {},
+  // "overrideFeatureInstallOrder": [],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "biomejs.biome",
+        "bradlc.vscode-tailwindcss",
+        "github.vscode-github-actions"
+      ],
+      "settings": {
+        "[javascript]": {
+          "editor.defaultFormatter": "biomejs.biome"
+        },
+        "[javascriptreact]": {
+          "editor.defaultFormatter": "biomejs.biome"
+        },
+        "[typescript]": {
+          "editor.defaultFormatter": "biomejs.biome"
+        },
+        "[typescriptreact]": {
+          "editor.defaultFormatter": "biomejs.biome"
+        },
+        "[json]": {
+          "editor.defaultFormatter": "biomejs.biome"
+        },
+        "[jsonc]": {
+          "editor.defaultFormatter": "biomejs.biome"
+        },
+        "[css]": {
+          "editor.defaultFormatter": "biomejs.biome"
+        },
+        "editor.formatOnSave": true
+      }
+    }
+  },
+  // https://containers.dev/implementors/json_reference/#image-specific
+  // "image": "mcr.microsoft.com/devcontainers/base:debian",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".",
+    "args": {},
+    "options": [],
+    "target": "",
+    "cacheFrom": []
+  },
+  "appPort": [],
+  "workspaceMount": "source=${localWorkspaceFolder},target=/home/vscode/app,type=bind,consistency=cached",
+  "workspaceFolder": "/home/vscode/app",
+  "runArgs": [
+    "--cap-add=SYS_PTRACE",
+    "--security-opt",
+    "seccomp=unconfined",
+    "--name",
+    "hukumen-megane-devcontainer--",
+    "--hostname",
+    "debian"
+  ],
+  // https://containers.dev/implementors/json_reference/#lifecycle-scripts
+  // "initializeCommand":[],
+  // "onCreateCommand": [],
+  // "updateContentCommand": [],
+  // "postCreateCommand": [],
+  "postStartCommand": {
+    "chown": "sudo chown -R vscode:vscode /home/vscode/app",
+    "bun ci": "bun ci"
+  }
+  // "postAttachCommand": [],
+  // "waitFor": "updateContentCommand"
+}
