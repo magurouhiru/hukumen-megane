@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as Privacy_policyRouteImport } from './routes/privacy_policy'
 import { Route as OtogeRouteImport } from './routes/otoge'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DevTestWebcamRouteImport } from './routes/dev/test-webcam'
 
 const Privacy_policyRoute = Privacy_policyRouteImport.update({
   id: '/privacy_policy',
@@ -28,35 +29,44 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DevTestWebcamRoute = DevTestWebcamRouteImport.update({
+  id: '/dev/test-webcam',
+  path: '/dev/test-webcam',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/otoge': typeof OtogeRoute
   '/privacy_policy': typeof Privacy_policyRoute
+  '/dev/test-webcam': typeof DevTestWebcamRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/otoge': typeof OtogeRoute
   '/privacy_policy': typeof Privacy_policyRoute
+  '/dev/test-webcam': typeof DevTestWebcamRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/otoge': typeof OtogeRoute
   '/privacy_policy': typeof Privacy_policyRoute
+  '/dev/test-webcam': typeof DevTestWebcamRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/otoge' | '/privacy_policy'
+  fullPaths: '/' | '/otoge' | '/privacy_policy' | '/dev/test-webcam'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/otoge' | '/privacy_policy'
-  id: '__root__' | '/' | '/otoge' | '/privacy_policy'
+  to: '/' | '/otoge' | '/privacy_policy' | '/dev/test-webcam'
+  id: '__root__' | '/' | '/otoge' | '/privacy_policy' | '/dev/test-webcam'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   OtogeRoute: typeof OtogeRoute
   Privacy_policyRoute: typeof Privacy_policyRoute
+  DevTestWebcamRoute: typeof DevTestWebcamRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dev/test-webcam': {
+      id: '/dev/test-webcam'
+      path: '/dev/test-webcam'
+      fullPath: '/dev/test-webcam'
+      preLoaderRoute: typeof DevTestWebcamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   OtogeRoute: OtogeRoute,
   Privacy_policyRoute: Privacy_policyRoute,
+  DevTestWebcamRoute: DevTestWebcamRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

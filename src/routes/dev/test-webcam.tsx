@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
 
-export const Route = createFileRoute("/otoge")({
-  component: OtogeComponent,
+export const Route = createFileRoute("/dev/test-webcam")({
+  component: TestWebcamComponent,
 });
 
-function OtogeComponent() {
+function TestWebcamComponent() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -19,8 +19,8 @@ function OtogeComponent() {
           );
           stream = await navigator.mediaDevices.getUserMedia({
             video: {
-              height: videoRef.current.clientHeight,
-              width: videoRef.current.clientWidth,
+              height: videoRef.current.clientHeight / 2,
+              width: videoRef.current.clientWidth / 2,
               facingMode: "user",
             },
             audio: false,
@@ -47,7 +47,7 @@ function OtogeComponent() {
         ref={videoRef}
         autoPlay={true}
         playsInline
-        className="h-screen w-full"
+        className="h-screen w-full -scale-x-100 object-fill"
       >
         <track kind="captions" />
       </video>
