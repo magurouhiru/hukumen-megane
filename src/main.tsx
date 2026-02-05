@@ -44,6 +44,3 @@ if (rootElement && !rootElement.innerHTML) {
 } else {
   console.error("Root element not found or already has content");
 }
-
-
-
