@@ -6,11 +6,13 @@ import { routeTree } from "./routeTree.gen";
 import "./index.css";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
+import { StrictMode } from "react";
 import NotFound from "./component/404";
 // biome-ignore lint/suspicious/noTsIgnore: vita でビルド時に作成されるので無視する
 // @ts-ignore
 import { messages } from "./locales/ja/messages";
 
+// デフォルトは日本語
 i18n.load("ja", messages);
 i18n.activate("ja");
 
@@ -33,9 +35,11 @@ const rootElement = document.getElementById("app");
 if (rootElement && !rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
-    <I18nProvider i18n={i18n}>
-      <RouterProvider router={router} defaultNotFoundComponent={NotFound} />
-    </I18nProvider>,
+    <StrictMode>
+      <I18nProvider i18n={i18n}>
+        <RouterProvider router={router} defaultNotFoundComponent={NotFound} />
+      </I18nProvider>
+    </StrictMode>,
   );
 } else {
   console.error("Root element not found or already has content");
