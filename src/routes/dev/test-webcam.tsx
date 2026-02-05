@@ -5,6 +5,7 @@ export const Route = createFileRoute("/dev/test-webcam")({
   component: TestWebcamComponent,
 });
 
+// webcamのテスト用のコンポーネント
 function TestWebcamComponent() {
   const videoRef = useRef<HTMLVideoElement>(null);
 

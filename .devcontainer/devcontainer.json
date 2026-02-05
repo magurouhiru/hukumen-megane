@@ -24,6 +24,7 @@
   // "securityOpt": [],
   "mounts": [
     {
+      // node_modulesをホストと分離
       "source": "hukumen-megane-devcontainer__node_modules",
       "target": "/home/vscode/app/node_modules",
       "type": "volume"
@@ -39,6 +40,7 @@
         "github.vscode-github-actions"
       ],
       "settings": {
+        // フォーマットはBiome
         "[javascript]": {
           "editor.defaultFormatter": "biomejs.biome"
         },
@@ -55,6 +57,9 @@
           "editor.defaultFormatter": "biomejs.biome"
         },
         "[jsonc]": {
+          "editor.defaultFormatter": "biomejs.biome"
+        },
+        "[html]": {
           "editor.defaultFormatter": "biomejs.biome"
         },
         "[css]": {
@@ -82,7 +87,7 @@
     "--security-opt",
     "seccomp=unconfined",
     "--name",
-    "hukumen-megane-devcontainer--",
+    "hukumen-megane-devcontainer",
     "--hostname",
     "debian"
   ],
@@ -92,6 +97,7 @@
   // "updateContentCommand": [],
   // "postCreateCommand": [],
   "postStartCommand": {
+    // 権限問題を回避
     "chown": "sudo chown -R vscode:vscode /home/vscode/app",
     "bun ci": "bun ci"
   }

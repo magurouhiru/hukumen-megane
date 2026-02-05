@@ -1,5 +1,7 @@
 import { Trans } from "@lingui/react/macro";
 
+// レイアウトは基本__root.tsxに書くべきだが、
+// 音ゲーするときはフルスクリーンでやりたいので、コンポーネント化する
 function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
