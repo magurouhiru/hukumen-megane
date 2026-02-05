@@ -5,6 +5,8 @@ export const Route = createRootRoute({
   component: RootComponent,
 });
 
+// レイアウトは基本__root.tsxに書くべきだが、
+// 音ゲーするときはフルスクリーンでやりたいので、Outletのみ
 function RootComponent() {
   return (
     <>

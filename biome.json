@@ -46,10 +46,5 @@
     "parser": {
       "tailwindDirectives": true
     }
-  },
-  "html": {
-    "formatter": {
-      "enabled": true
-    }
   }
 }

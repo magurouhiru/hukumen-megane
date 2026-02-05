@@ -11,6 +11,7 @@ export const Route = createFileRoute("/dev/test-hand-landmarker")({
   component: TestHandLandmarkerComponent,
 });
 
+// 手のランドマーク取得のテスト用コンポーネント
 function TestHandLandmarkerComponent() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -20,10 +21,6 @@ function TestHandLandmarkerComponent() {
     const startCamera = async () => {
       try {
         if (videoRef.current) {
-          console.log(
-            videoRef.current.clientHeight,
-            videoRef.current.clientWidth,
-          );
           stream = await navigator.mediaDevices.getUserMedia({
             video: {
               height: videoRef.current.clientHeight / 2,
@@ -40,10 +37,6 @@ function TestHandLandmarkerComponent() {
     };
 
     let handLandmarker: HandLandmarker | null = null;
-    let drawingUtils: DrawingUtils | null = null;
-    let results: HandLandmarkerResult | null = null;
-    let rId: number;
-    let canvasCtx: CanvasRenderingContext2D | null = null;
     const createHandLandmarker = async () => {
       const vision = await FilesetResolver.forVisionTasks("/mediapipe/wasm");
       handLandmarker = await HandLandmarker.createFromOptions(vision, {
@@ -56,47 +49,58 @@ function TestHandLandmarkerComponent() {
       });
     };
 
+    let lastVideoTime = -1;
+    let results: HandLandmarkerResult | null = null;
+    let canvasCtx: CanvasRenderingContext2D | null = null;
+    let drawingUtils: DrawingUtils | null = null;
+    let rId: number;
     const predictWebcam = () => {
-      let lastVideoTime = -1;
-      const startTimeMs = performance.now();
+      // 手のランドマーク検出
+      // videoとHandLandmarkerの準備ができているかつ前回と同じ時刻でない場合、検出する。
       if (
         videoRef.current &&
-        lastVideoTime !== videoRef.current.currentTime &&
-        handLandmarker
+        handLandmarker &&
+        lastVideoTime !== videoRef.current.currentTime
       ) {
         lastVideoTime = videoRef.current.currentTime;
-        results = handLandmarker.detectForVideo(videoRef.current, startTimeMs);
+        results = handLandmarker.detectForVideo(
+          videoRef.current,
+          performance.now(),
+        );
       }
-      if (canvasRef.current) {
-        if (!canvasCtx) canvasCtx = canvasRef.current.getContext("2d");
-        if (canvasCtx) {
-          canvasCtx.save();
-          canvasCtx.clearRect(
-            0,
-            0,
-            canvasRef.current.width,
-            canvasRef.current.height,
-          );
-          if (!drawingUtils) drawingUtils = new DrawingUtils(canvasCtx);
-          if (results?.landmarks) {
-            for (const landmarks of results.landmarks) {
-              drawingUtils.drawConnectors(
-                landmarks,
-                HandLandmarker.HAND_CONNECTIONS,
-                {
-                  color: "#00FF00",
-                  lineWidth: 2,
-                },
-              );
-              drawingUtils.drawLandmarks(landmarks, {
-                color: "#FF0000",
+
+      // canvasへの描画
+      // canvasが無ければ(コンポーネントが破棄されたら)早期リターン
+      if (!canvasRef.current) return;
+      if (!canvasCtx) canvasCtx = canvasRef.current.getContext("2d");
+      if (!canvasCtx) return;
+      if (!drawingUtils) drawingUtils = new DrawingUtils(canvasCtx);
+      if (canvasCtx) {
+        canvasCtx.save();
+        canvasCtx.clearRect(
+          0,
+          0,
+          canvasRef.current.width,
+          canvasRef.current.height,
+        );
+        if (results?.landmarks) {
+          for (const landmarks of results.landmarks) {
+            drawingUtils.drawConnectors(
+              landmarks,
+              HandLandmarker.HAND_CONNECTIONS,
+              {
+                color: "#00FF00",
                 lineWidth: 2,
-              });
-            }
+              },
+            );
+            drawingUtils.drawLandmarks(landmarks, {
+              color: "#FF0000",
+              radius: 2,
+            });
           }
-          canvasCtx.restore();
-          rId = window.requestAnimationFrame(predictWebcam);
         }
+        canvasCtx.restore();
+        rId = window.requestAnimationFrame(predictWebcam);
       }
     };
     const start = async () => {

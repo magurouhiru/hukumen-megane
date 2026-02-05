@@ -17,10 +17,10 @@ msgstr ""
 msgid "404 - Not Found"
 msgstr "404 - Not Found"
 
-#: src/component/common/layout.tsx:21
+#: src/component/common/layout.tsx:23
 msgid "My Application Footer"
 msgstr "My Application Footer"
 
-#: src/component/common/layout.tsx:9
+#: src/component/common/layout.tsx:11
 msgid "My Application Header"
 msgstr "My Application Header"
