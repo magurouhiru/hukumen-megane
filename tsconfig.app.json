@@ -8,6 +8,8 @@
     "types": ["vite/client"],
     "skipLibCheck": true,
 
+    // 相対パスが嫌なので、 "@/..." で src 以下を参照できるようにする
+    // ここ以外はデフォルト設定のまま
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]

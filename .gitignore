@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# なんか気づいたらできてたので追加
+.tanstack
