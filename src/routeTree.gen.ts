@@ -13,6 +13,7 @@ import { Route as Privacy_policyRouteImport } from './routes/privacy_policy'
 import { Route as OtogeRouteImport } from './routes/otoge'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DevTestWebcamRouteImport } from './routes/dev/test-webcam'
+import { Route as DevTestWebAudioApiRouteImport } from './routes/dev/test-web-audio-api'
 import { Route as DevTestHandLandmarkerRouteImport } from './routes/dev/test-hand-landmarker'
 
 const Privacy_policyRoute = Privacy_policyRouteImport.update({
@@ -35,6 +36,11 @@ const DevTestWebcamRoute = DevTestWebcamRouteImport.update({
   path: '/dev/test-webcam',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DevTestWebAudioApiRoute = DevTestWebAudioApiRouteImport.update({
+  id: '/dev/test-web-audio-api',
+  path: '/dev/test-web-audio-api',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DevTestHandLandmarkerRoute = DevTestHandLandmarkerRouteImport.update({
   id: '/dev/test-hand-landmarker',
   path: '/dev/test-hand-landmarker',
@@ -46,6 +52,7 @@ export interface FileRoutesByFullPath {
   '/otoge': typeof OtogeRoute
   '/privacy_policy': typeof Privacy_policyRoute
   '/dev/test-hand-landmarker': typeof DevTestHandLandmarkerRoute
+  '/dev/test-web-audio-api': typeof DevTestWebAudioApiRoute
   '/dev/test-webcam': typeof DevTestWebcamRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/otoge': typeof OtogeRoute
   '/privacy_policy': typeof Privacy_policyRoute
   '/dev/test-hand-landmarker': typeof DevTestHandLandmarkerRoute
+  '/dev/test-web-audio-api': typeof DevTestWebAudioApiRoute
   '/dev/test-webcam': typeof DevTestWebcamRoute
 }
 export interface FileRoutesById {
@@ -61,6 +69,7 @@ export interface FileRoutesById {
   '/otoge': typeof OtogeRoute
   '/privacy_policy': typeof Privacy_policyRoute
   '/dev/test-hand-landmarker': typeof DevTestHandLandmarkerRoute
+  '/dev/test-web-audio-api': typeof DevTestWebAudioApiRoute
   '/dev/test-webcam': typeof DevTestWebcamRoute
 }
 export interface FileRouteTypes {
@@ -70,6 +79,7 @@ export interface FileRouteTypes {
     | '/otoge'
     | '/privacy_policy'
     | '/dev/test-hand-landmarker'
+    | '/dev/test-web-audio-api'
     | '/dev/test-webcam'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -77,6 +87,7 @@ export interface FileRouteTypes {
     | '/otoge'
     | '/privacy_policy'
     | '/dev/test-hand-landmarker'
+    | '/dev/test-web-audio-api'
     | '/dev/test-webcam'
   id:
     | '__root__'
@@ -84,6 +95,7 @@ export interface FileRouteTypes {
     | '/otoge'
     | '/privacy_policy'
     | '/dev/test-hand-landmarker'
+    | '/dev/test-web-audio-api'
     | '/dev/test-webcam'
   fileRoutesById: FileRoutesById
 }
@@ -92,6 +104,7 @@ export interface RootRouteChildren {
   OtogeRoute: typeof OtogeRoute
   Privacy_policyRoute: typeof Privacy_policyRoute
   DevTestHandLandmarkerRoute: typeof DevTestHandLandmarkerRoute
+  DevTestWebAudioApiRoute: typeof DevTestWebAudioApiRoute
   DevTestWebcamRoute: typeof DevTestWebcamRoute
 }
 
@@ -125,6 +138,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DevTestWebcamRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dev/test-web-audio-api': {
+      id: '/dev/test-web-audio-api'
+      path: '/dev/test-web-audio-api'
+      fullPath: '/dev/test-web-audio-api'
+      preLoaderRoute: typeof DevTestWebAudioApiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dev/test-hand-landmarker': {
       id: '/dev/test-hand-landmarker'
       path: '/dev/test-hand-landmarker'
@@ -140,6 +160,7 @@ const rootRouteChildren: RootRouteChildren = {
   OtogeRoute: OtogeRoute,
   Privacy_policyRoute: Privacy_policyRoute,
   DevTestHandLandmarkerRoute: DevTestHandLandmarkerRoute,
+  DevTestWebAudioApiRoute: DevTestWebAudioApiRoute,
   DevTestWebcamRoute: DevTestWebcamRoute,
 }
 export const routeTree = rootRouteImport
