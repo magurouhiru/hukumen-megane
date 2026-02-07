@@ -5,7 +5,7 @@ export const Route = createFileRoute("/dev/test-web-audio-api")({
   component: TestWebAudioApiComponent,
 });
 
-// webcamのテスト用のコンポーネント
+// web audio apiのテスト用のコンポーネント
 function TestWebAudioApiComponent() {
   console.log("run");
   const audioContext = useRef<AudioContext>(null);

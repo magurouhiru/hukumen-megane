@@ -14,7 +14,11 @@ import { Route as OtogeRouteImport } from './routes/otoge'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DevTestWebcamRouteImport } from './routes/dev/test-webcam'
 import { Route as DevTestWebAudioApiRouteImport } from './routes/dev/test-web-audio-api'
-import { Route as DevTestHandLandmarkerRouteImport } from './routes/dev/test-hand-landmarker'
+import { Route as DevToneTestSchedulingRouteImport } from './routes/dev/tone/test-scheduling'
+import { Route as DevToneTestSamplesRouteImport } from './routes/dev/tone/test-samples'
+import { Route as DevToneTestInstrumentsRouteImport } from './routes/dev/tone/test-instruments'
+import { Route as DevToneTestHelloRouteImport } from './routes/dev/tone/test-hello'
+import { Route as DevMediapipeTestHandLandmarkerRouteImport } from './routes/dev/mediapipe/test-hand-landmarker'
 
 const Privacy_policyRoute = Privacy_policyRouteImport.update({
   id: '/privacy_policy',
@@ -41,36 +45,69 @@ const DevTestWebAudioApiRoute = DevTestWebAudioApiRouteImport.update({
   path: '/dev/test-web-audio-api',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DevTestHandLandmarkerRoute = DevTestHandLandmarkerRouteImport.update({
-  id: '/dev/test-hand-landmarker',
-  path: '/dev/test-hand-landmarker',
+const DevToneTestSchedulingRoute = DevToneTestSchedulingRouteImport.update({
+  id: '/dev/tone/test-scheduling',
+  path: '/dev/tone/test-scheduling',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DevToneTestSamplesRoute = DevToneTestSamplesRouteImport.update({
+  id: '/dev/tone/test-samples',
+  path: '/dev/tone/test-samples',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DevToneTestInstrumentsRoute = DevToneTestInstrumentsRouteImport.update({
+  id: '/dev/tone/test-instruments',
+  path: '/dev/tone/test-instruments',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DevToneTestHelloRoute = DevToneTestHelloRouteImport.update({
+  id: '/dev/tone/test-hello',
+  path: '/dev/tone/test-hello',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DevMediapipeTestHandLandmarkerRoute =
+  DevMediapipeTestHandLandmarkerRouteImport.update({
+    id: '/dev/mediapipe/test-hand-landmarker',
+    path: '/dev/mediapipe/test-hand-landmarker',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/otoge': typeof OtogeRoute
   '/privacy_policy': typeof Privacy_policyRoute
-  '/dev/test-hand-landmarker': typeof DevTestHandLandmarkerRoute
   '/dev/test-web-audio-api': typeof DevTestWebAudioApiRoute
   '/dev/test-webcam': typeof DevTestWebcamRoute
+  '/dev/mediapipe/test-hand-landmarker': typeof DevMediapipeTestHandLandmarkerRoute
+  '/dev/tone/test-hello': typeof DevToneTestHelloRoute
+  '/dev/tone/test-instruments': typeof DevToneTestInstrumentsRoute
+  '/dev/tone/test-samples': typeof DevToneTestSamplesRoute
+  '/dev/tone/test-scheduling': typeof DevToneTestSchedulingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/otoge': typeof OtogeRoute
   '/privacy_policy': typeof Privacy_policyRoute
-  '/dev/test-hand-landmarker': typeof DevTestHandLandmarkerRoute
   '/dev/test-web-audio-api': typeof DevTestWebAudioApiRoute
   '/dev/test-webcam': typeof DevTestWebcamRoute
+  '/dev/mediapipe/test-hand-landmarker': typeof DevMediapipeTestHandLandmarkerRoute
+  '/dev/tone/test-hello': typeof DevToneTestHelloRoute
+  '/dev/tone/test-instruments': typeof DevToneTestInstrumentsRoute
+  '/dev/tone/test-samples': typeof DevToneTestSamplesRoute
+  '/dev/tone/test-scheduling': typeof DevToneTestSchedulingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/otoge': typeof OtogeRoute
   '/privacy_policy': typeof Privacy_policyRoute
-  '/dev/test-hand-landmarker': typeof DevTestHandLandmarkerRoute
   '/dev/test-web-audio-api': typeof DevTestWebAudioApiRoute
   '/dev/test-webcam': typeof DevTestWebcamRoute
+  '/dev/mediapipe/test-hand-landmarker': typeof DevMediapipeTestHandLandmarkerRoute
+  '/dev/tone/test-hello': typeof DevToneTestHelloRoute
+  '/dev/tone/test-instruments': typeof DevToneTestInstrumentsRoute
+  '/dev/tone/test-samples': typeof DevToneTestSamplesRoute
+  '/dev/tone/test-scheduling': typeof DevToneTestSchedulingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -78,34 +115,50 @@ export interface FileRouteTypes {
     | '/'
     | '/otoge'
     | '/privacy_policy'
-    | '/dev/test-hand-landmarker'
     | '/dev/test-web-audio-api'
     | '/dev/test-webcam'
+    | '/dev/mediapipe/test-hand-landmarker'
+    | '/dev/tone/test-hello'
+    | '/dev/tone/test-instruments'
+    | '/dev/tone/test-samples'
+    | '/dev/tone/test-scheduling'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/otoge'
     | '/privacy_policy'
-    | '/dev/test-hand-landmarker'
     | '/dev/test-web-audio-api'
     | '/dev/test-webcam'
+    | '/dev/mediapipe/test-hand-landmarker'
+    | '/dev/tone/test-hello'
+    | '/dev/tone/test-instruments'
+    | '/dev/tone/test-samples'
+    | '/dev/tone/test-scheduling'
   id:
     | '__root__'
     | '/'
     | '/otoge'
     | '/privacy_policy'
-    | '/dev/test-hand-landmarker'
     | '/dev/test-web-audio-api'
     | '/dev/test-webcam'
+    | '/dev/mediapipe/test-hand-landmarker'
+    | '/dev/tone/test-hello'
+    | '/dev/tone/test-instruments'
+    | '/dev/tone/test-samples'
+    | '/dev/tone/test-scheduling'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   OtogeRoute: typeof OtogeRoute
   Privacy_policyRoute: typeof Privacy_policyRoute
-  DevTestHandLandmarkerRoute: typeof DevTestHandLandmarkerRoute
   DevTestWebAudioApiRoute: typeof DevTestWebAudioApiRoute
   DevTestWebcamRoute: typeof DevTestWebcamRoute
+  DevMediapipeTestHandLandmarkerRoute: typeof DevMediapipeTestHandLandmarkerRoute
+  DevToneTestHelloRoute: typeof DevToneTestHelloRoute
+  DevToneTestInstrumentsRoute: typeof DevToneTestInstrumentsRoute
+  DevToneTestSamplesRoute: typeof DevToneTestSamplesRoute
+  DevToneTestSchedulingRoute: typeof DevToneTestSchedulingRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -145,11 +198,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DevTestWebAudioApiRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dev/test-hand-landmarker': {
-      id: '/dev/test-hand-landmarker'
-      path: '/dev/test-hand-landmarker'
-      fullPath: '/dev/test-hand-landmarker'
-      preLoaderRoute: typeof DevTestHandLandmarkerRouteImport
+    '/dev/tone/test-scheduling': {
+      id: '/dev/tone/test-scheduling'
+      path: '/dev/tone/test-scheduling'
+      fullPath: '/dev/tone/test-scheduling'
+      preLoaderRoute: typeof DevToneTestSchedulingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dev/tone/test-samples': {
+      id: '/dev/tone/test-samples'
+      path: '/dev/tone/test-samples'
+      fullPath: '/dev/tone/test-samples'
+      preLoaderRoute: typeof DevToneTestSamplesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dev/tone/test-instruments': {
+      id: '/dev/tone/test-instruments'
+      path: '/dev/tone/test-instruments'
+      fullPath: '/dev/tone/test-instruments'
+      preLoaderRoute: typeof DevToneTestInstrumentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dev/tone/test-hello': {
+      id: '/dev/tone/test-hello'
+      path: '/dev/tone/test-hello'
+      fullPath: '/dev/tone/test-hello'
+      preLoaderRoute: typeof DevToneTestHelloRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dev/mediapipe/test-hand-landmarker': {
+      id: '/dev/mediapipe/test-hand-landmarker'
+      path: '/dev/mediapipe/test-hand-landmarker'
+      fullPath: '/dev/mediapipe/test-hand-landmarker'
+      preLoaderRoute: typeof DevMediapipeTestHandLandmarkerRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -159,9 +240,13 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   OtogeRoute: OtogeRoute,
   Privacy_policyRoute: Privacy_policyRoute,
-  DevTestHandLandmarkerRoute: DevTestHandLandmarkerRoute,
   DevTestWebAudioApiRoute: DevTestWebAudioApiRoute,
   DevTestWebcamRoute: DevTestWebcamRoute,
+  DevMediapipeTestHandLandmarkerRoute: DevMediapipeTestHandLandmarkerRoute,
+  DevToneTestHelloRoute: DevToneTestHelloRoute,
+  DevToneTestInstrumentsRoute: DevToneTestInstrumentsRoute,
+  DevToneTestSamplesRoute: DevToneTestSamplesRoute,
+  DevToneTestSchedulingRoute: DevToneTestSchedulingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
