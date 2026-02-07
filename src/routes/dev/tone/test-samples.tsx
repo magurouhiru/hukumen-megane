@@ -16,6 +16,7 @@ function TestSamplesComponent() {
     console.log("init");
     if (!player.current) {
       player.current = new Tone.Player("/music/420_BPM108.mp3").toDestination();
+      await Tone.start();
     }
   };
 
@@ -34,11 +35,11 @@ function TestSamplesComponent() {
           if (player.current && buttonRef.current) {
             if (buttonRef.current?.dataset.playing === "false") {
               console.log("play");
-              Tone.getTransport().start();
+              player.current.start();
               buttonRef.current.dataset.playing = "true";
             } else if (buttonRef.current?.dataset.playing === "true") {
               console.log("pause");
-              Tone.getTransport().pause();
+              player.current.stop();
               buttonRef.current.dataset.playing = "false";
             }
           }
