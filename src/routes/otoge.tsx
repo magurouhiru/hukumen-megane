@@ -65,7 +65,7 @@ function OtogeComponent() {
           delegate: "GPU",
         },
         runningMode: "VIDEO",
-        numHands: 1,
+        numHands: 2,
       });
     };
 
@@ -105,8 +105,9 @@ function OtogeComponent() {
         );
         if (results?.landmarks && results.landmarks.length > 0) {
           for (const landmarks of results.landmarks) {
-            const { v, f } = calcVF(landmarks);
-            // console.log(v, f);
+            const { v, p, f } = calcVPF(landmarks);
+            console.log(v, p, f);
+            pannerNode.current?.pan.rampTo(p, 0.01);
             gainNode.current?.gain.rampTo(v * 2, 0.01);
             oscillatorNode.current?.frequency.rampTo(1100 * (1 - f), 0.01);
             drawingUtils.drawConnectors(
@@ -180,34 +181,46 @@ function OtogeComponent() {
   );
 }
 
-function calcVF(landmarks: NormalizedLandmark[]) {
+const r = 100;
+
+function calcVPF(landmarks: NormalizedLandmark[]) {
   const thumbTip = landmarks[4];
   const indexFingerTip = landmarks[8];
   const middleFingerTip = landmarks[12];
   const ringFingerTip = landmarks[16];
   const pinkyFingerTip = landmarks[20];
-  const d =
+  const d = Math.sqrt(
     (thumbTip.x - indexFingerTip.x) ** 2 +
-    (thumbTip.y - indexFingerTip.y) ** 2 +
-    (indexFingerTip.x - middleFingerTip.x) ** 2 +
-    (indexFingerTip.y - middleFingerTip.y) ** 2 +
-    (middleFingerTip.x - ringFingerTip.x) ** 2 +
-    (middleFingerTip.y - ringFingerTip.y) ** 2 +
-    (ringFingerTip.x - pinkyFingerTip.x) ** 2 +
-    (ringFingerTip.y - pinkyFingerTip.y) ** 2 +
-    (pinkyFingerTip.x - thumbTip.x) ** 2 +
-    (pinkyFingerTip.y - thumbTip.y) ** 2;
-  const v = d > 0.02 ? Math.round(Math.sqrt(d) * 100) / 100 : 0;
-  const a =
+      (thumbTip.y - indexFingerTip.y) ** 2 +
+      (indexFingerTip.x - middleFingerTip.x) ** 2 +
+      (indexFingerTip.y - middleFingerTip.y) ** 2 +
+      (middleFingerTip.x - ringFingerTip.x) ** 2 +
+      (middleFingerTip.y - ringFingerTip.y) ** 2 +
+      (ringFingerTip.x - pinkyFingerTip.x) ** 2 +
+      (ringFingerTip.y - pinkyFingerTip.y) ** 2 +
+      (pinkyFingerTip.x - thumbTip.x) ** 2 +
+      (pinkyFingerTip.y - thumbTip.y) ** 2,
+  );
+  const v = d > 0.02 ? Math.round(d * r) / r : 0;
+  const aX =
+    (thumbTip.x +
+      indexFingerTip.x +
+      middleFingerTip.x +
+      ringFingerTip.x +
+      pinkyFingerTip.x) /
+    5;
+  const p = Math.round((aX - 0.5) * r * -1.5) / r;
+  const aY =
     (thumbTip.y +
       indexFingerTip.y +
       middleFingerTip.y +
       ringFingerTip.y +
       pinkyFingerTip.y) /
     5;
-  const f = Math.round(a * 100) / 100;
+  const f = Math.round(aY * r) / r;
   return {
     v,
+    p,
     f,
   };
 }
