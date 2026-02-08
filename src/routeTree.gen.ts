@@ -16,6 +16,7 @@ import { Route as DevTestWebcamRouteImport } from './routes/dev/test-webcam'
 import { Route as DevTestWebAudioApiRouteImport } from './routes/dev/test-web-audio-api'
 import { Route as DevToneTestSchedulingRouteImport } from './routes/dev/tone/test-scheduling'
 import { Route as DevToneTestSamplesRouteImport } from './routes/dev/tone/test-samples'
+import { Route as DevToneTestSampleRouteImport } from './routes/dev/tone/test-sample'
 import { Route as DevToneTestInstrumentsRouteImport } from './routes/dev/tone/test-instruments'
 import { Route as DevToneTestHelloRouteImport } from './routes/dev/tone/test-hello'
 import { Route as DevMediapipeTestHandLandmarkerRouteImport } from './routes/dev/mediapipe/test-hand-landmarker'
@@ -55,6 +56,11 @@ const DevToneTestSamplesRoute = DevToneTestSamplesRouteImport.update({
   path: '/dev/tone/test-samples',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DevToneTestSampleRoute = DevToneTestSampleRouteImport.update({
+  id: '/dev/tone/test-sample',
+  path: '/dev/tone/test-sample',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DevToneTestInstrumentsRoute = DevToneTestInstrumentsRouteImport.update({
   id: '/dev/tone/test-instruments',
   path: '/dev/tone/test-instruments',
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/dev/mediapipe/test-hand-landmarker': typeof DevMediapipeTestHandLandmarkerRoute
   '/dev/tone/test-hello': typeof DevToneTestHelloRoute
   '/dev/tone/test-instruments': typeof DevToneTestInstrumentsRoute
+  '/dev/tone/test-sample': typeof DevToneTestSampleRoute
   '/dev/tone/test-samples': typeof DevToneTestSamplesRoute
   '/dev/tone/test-scheduling': typeof DevToneTestSchedulingRoute
 }
@@ -93,6 +100,7 @@ export interface FileRoutesByTo {
   '/dev/mediapipe/test-hand-landmarker': typeof DevMediapipeTestHandLandmarkerRoute
   '/dev/tone/test-hello': typeof DevToneTestHelloRoute
   '/dev/tone/test-instruments': typeof DevToneTestInstrumentsRoute
+  '/dev/tone/test-sample': typeof DevToneTestSampleRoute
   '/dev/tone/test-samples': typeof DevToneTestSamplesRoute
   '/dev/tone/test-scheduling': typeof DevToneTestSchedulingRoute
 }
@@ -106,6 +114,7 @@ export interface FileRoutesById {
   '/dev/mediapipe/test-hand-landmarker': typeof DevMediapipeTestHandLandmarkerRoute
   '/dev/tone/test-hello': typeof DevToneTestHelloRoute
   '/dev/tone/test-instruments': typeof DevToneTestInstrumentsRoute
+  '/dev/tone/test-sample': typeof DevToneTestSampleRoute
   '/dev/tone/test-samples': typeof DevToneTestSamplesRoute
   '/dev/tone/test-scheduling': typeof DevToneTestSchedulingRoute
 }
@@ -120,6 +129,7 @@ export interface FileRouteTypes {
     | '/dev/mediapipe/test-hand-landmarker'
     | '/dev/tone/test-hello'
     | '/dev/tone/test-instruments'
+    | '/dev/tone/test-sample'
     | '/dev/tone/test-samples'
     | '/dev/tone/test-scheduling'
   fileRoutesByTo: FileRoutesByTo
@@ -132,6 +142,7 @@ export interface FileRouteTypes {
     | '/dev/mediapipe/test-hand-landmarker'
     | '/dev/tone/test-hello'
     | '/dev/tone/test-instruments'
+    | '/dev/tone/test-sample'
     | '/dev/tone/test-samples'
     | '/dev/tone/test-scheduling'
   id:
@@ -144,6 +155,7 @@ export interface FileRouteTypes {
     | '/dev/mediapipe/test-hand-landmarker'
     | '/dev/tone/test-hello'
     | '/dev/tone/test-instruments'
+    | '/dev/tone/test-sample'
     | '/dev/tone/test-samples'
     | '/dev/tone/test-scheduling'
   fileRoutesById: FileRoutesById
@@ -157,6 +169,7 @@ export interface RootRouteChildren {
   DevMediapipeTestHandLandmarkerRoute: typeof DevMediapipeTestHandLandmarkerRoute
   DevToneTestHelloRoute: typeof DevToneTestHelloRoute
   DevToneTestInstrumentsRoute: typeof DevToneTestInstrumentsRoute
+  DevToneTestSampleRoute: typeof DevToneTestSampleRoute
   DevToneTestSamplesRoute: typeof DevToneTestSamplesRoute
   DevToneTestSchedulingRoute: typeof DevToneTestSchedulingRoute
 }
@@ -212,6 +225,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DevToneTestSamplesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dev/tone/test-sample': {
+      id: '/dev/tone/test-sample'
+      path: '/dev/tone/test-sample'
+      fullPath: '/dev/tone/test-sample'
+      preLoaderRoute: typeof DevToneTestSampleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dev/tone/test-instruments': {
       id: '/dev/tone/test-instruments'
       path: '/dev/tone/test-instruments'
@@ -245,6 +265,7 @@ const rootRouteChildren: RootRouteChildren = {
   DevMediapipeTestHandLandmarkerRoute: DevMediapipeTestHandLandmarkerRoute,
   DevToneTestHelloRoute: DevToneTestHelloRoute,
   DevToneTestInstrumentsRoute: DevToneTestInstrumentsRoute,
+  DevToneTestSampleRoute: DevToneTestSampleRoute,
   DevToneTestSamplesRoute: DevToneTestSamplesRoute,
   DevToneTestSchedulingRoute: DevToneTestSchedulingRoute,
 }
