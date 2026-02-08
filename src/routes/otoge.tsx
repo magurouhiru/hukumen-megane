@@ -13,28 +13,38 @@ export const Route = createFileRoute("/otoge")({
   component: OtogeComponent,
 });
 
+const MAX_HAND = 2;
+
 function OtogeComponent() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const oscillatorNode = useRef<Tone.Oscillator>(null);
-  const gainNode = useRef<Tone.Gain>(null);
-  const pannerNode = useRef<Tone.Panner>(null);
+  const oscillatorNode = useRef<Tone.Oscillator[]>([]);
+  const gainNode = useRef<Tone.Gain[]>([]);
+  const pannerNode = useRef<Tone.Panner[]>([]);
 
   useEffect(() => {
-    if (!gainNode.current) {
+    if (gainNode.current.length !== MAX_HAND) {
       console.log("new Gain");
-      gainNode.current = new Tone.Gain(0).toDestination();
+      gainNode.current = new Array(MAX_HAND)
+        .fill(null)
+        .map(() => new Tone.Gain(0).toDestination());
     }
-    if (!pannerNode.current) {
+    if (pannerNode.current.length !== MAX_HAND) {
       console.log("new Panner");
-      pannerNode.current = new Tone.Panner();
+      pannerNode.current = new Array(MAX_HAND)
+        .fill(null)
+        .map(() => new Tone.Panner(0));
     }
-    if (!oscillatorNode.current) {
+    if (oscillatorNode.current.length !== MAX_HAND) {
       console.log("new Oscillator");
-      oscillatorNode.current = new Tone.Oscillator()
-        .chain(pannerNode.current, gainNode.current)
-        .start();
+      oscillatorNode.current = new Array(MAX_HAND)
+        .fill(null)
+        .map((_, i) =>
+          new Tone.Oscillator()
+            .chain(pannerNode.current[i], gainNode.current[i])
+            .start(),
+        );
     }
 
     let stream: MediaStream | null = null;
@@ -65,7 +75,7 @@ function OtogeComponent() {
           delegate: "GPU",
         },
         runningMode: "VIDEO",
-        numHands: 2,
+        numHands: MAX_HAND,
       });
     };
 
@@ -104,13 +114,19 @@ function OtogeComponent() {
           canvasRef.current.height,
         );
         if (results?.landmarks && results.landmarks.length > 0) {
-          for (const landmarks of results.landmarks) {
+          results.landmarks.forEach((landmarks, i) => {
             const { v, p, f } = calcVPF(landmarks);
-            console.log(v, p, f);
-            pannerNode.current?.pan.rampTo(p, 0.01);
-            gainNode.current?.gain.rampTo(v * 2, 0.01);
-            oscillatorNode.current?.frequency.rampTo(1100 * (1 - f), 0.01);
-            drawingUtils.drawConnectors(
+            // console.log(i, v, p, f);
+            // console.log(
+            //   i,
+            //   gainNode.current.length,
+            //   pannerNode.current.length,
+            //   oscillatorNode.current.length,
+            // );
+            gainNode.current[i].gain.rampTo(v * 2, 0);
+            pannerNode.current[i].pan.rampTo(p, 0);
+            oscillatorNode.current[i].frequency.rampTo(f, 0);
+            drawingUtils?.drawConnectors(
               landmarks,
               HandLandmarker.HAND_CONNECTIONS,
               {
@@ -118,13 +134,15 @@ function OtogeComponent() {
                 lineWidth: 2,
               },
             );
-            drawingUtils.drawLandmarks(landmarks, {
+            drawingUtils?.drawLandmarks(landmarks, {
               color: "#FF0000",
               radius: 2,
             });
-          }
+          });
         } else {
-          gainNode.current?.gain.rampTo(0, 0);
+          gainNode.current.forEach((node) => {
+            node.gain.rampTo(0, 0);
+          });
         }
         canvasCtx.restore();
         rId = window.requestAnimationFrame(predictWebcam);
@@ -146,12 +164,18 @@ function OtogeComponent() {
       if (rId) {
         window.cancelAnimationFrame(rId);
       }
-      oscillatorNode.current?.dispose();
-      oscillatorNode.current = null;
-      gainNode.current?.dispose();
-      gainNode.current = null;
-      pannerNode.current?.dispose();
-      pannerNode.current = null;
+      oscillatorNode.current.forEach((node) => {
+        node.dispose();
+      });
+      oscillatorNode.current = [];
+      gainNode.current.forEach((node) => {
+        node.dispose();
+      });
+      gainNode.current = [];
+      pannerNode.current.forEach((node) => {
+        node.dispose();
+      });
+      pannerNode.current = [];
     };
   }, []);
 
@@ -201,7 +225,7 @@ function calcVPF(landmarks: NormalizedLandmark[]) {
       (pinkyFingerTip.x - thumbTip.x) ** 2 +
       (pinkyFingerTip.y - thumbTip.y) ** 2,
   );
-  const v = d > 0.02 ? Math.round(d * r) / r : 0;
+  const v = Math.min(Math.max(0, d > 0.1 ? Math.round(d * r) / r : 0), 1);
   const aX =
     (thumbTip.x +
       indexFingerTip.x +
@@ -209,7 +233,7 @@ function calcVPF(landmarks: NormalizedLandmark[]) {
       ringFingerTip.x +
       pinkyFingerTip.x) /
     5;
-  const p = Math.round((aX - 0.5) * r * -1.5) / r;
+  const p = Math.min(Math.max(-1, Math.round((aX - 0.5) * r * -1.5) / r), 1);
   const aY =
     (thumbTip.y +
       indexFingerTip.y +
@@ -217,7 +241,7 @@ function calcVPF(landmarks: NormalizedLandmark[]) {
       ringFingerTip.y +
       pinkyFingerTip.y) /
     5;
-  const f = Math.round(aY * r) / r;
+  const f = Math.min(Math.max(0, Math.round(1100 * (1 - aY) * r) / r), 1100);
   return {
     v,
     p,
