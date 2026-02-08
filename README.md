@@ -57,3 +57,9 @@ vscode とdevcontainer の使用を前提としています。
 - [tailwindcss](https://tailwindcss.com/)
   - ユーティリティクラス(.flex{display:flex;}のような小さいクラス)ベースでのstyle指定を提供します。
   - 慣れているかつReactと相性がいい？らしいので採用。
+
+## 音源
+
+### [BGMer](http://bgmer.net)
+
+#### [電気街の悪魔](https://bgmer.net/music/420)

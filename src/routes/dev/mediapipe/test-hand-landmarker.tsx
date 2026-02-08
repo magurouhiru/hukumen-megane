@@ -7,7 +7,7 @@ import {
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
 
-export const Route = createFileRoute("/dev/test-hand-landmarker")({
+export const Route = createFileRoute("/dev/mediapipe/test-hand-landmarker")({
   component: TestHandLandmarkerComponent,
 });
 
