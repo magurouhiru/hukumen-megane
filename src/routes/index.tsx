@@ -1,5 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import React from "@/assets/react.svg";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import Card from "@/component/card";
 
 export const Route = createFileRoute("/")({
   component: HomeComponent,
@@ -7,9 +7,12 @@ export const Route = createFileRoute("/")({
 
 function HomeComponent() {
   return (
-    <>
-      <h1>Home Page</h1>
-      <img src={React} alt="Homepage_Image" className="h-40 w-40" />
-    </>
+    <div className="grid gap-4">
+      <Link to="/otoge">
+        <Card>
+          <div>test</div>
+        </Card>
+      </Link>
+    </div>
   );
 }
