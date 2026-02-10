@@ -1,3 +1,4 @@
+import { t } from "@lingui/core/macro";
 import {
   DrawingUtils,
   FilesetResolver,
@@ -5,8 +6,8 @@ import {
   type HandLandmarkerResult,
   type NormalizedLandmark,
 } from "@mediapipe/tasks-vision";
-import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
 import * as Tone from "tone";
 
 export const Route = createFileRoute("/otoge")({
@@ -22,6 +23,11 @@ function OtogeComponent() {
   const oscillatorNode = useRef<Tone.Oscillator[]>([]);
   const gainNode = useRef<Tone.Gain[]>([]);
   const pannerNode = useRef<Tone.Panner[]>([]);
+
+  const [enableSound, setEnableSound] = useState(
+    Tone.getContext().state !== "suspended",
+  );
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     if (gainNode.current.length !== MAX_HAND) {
@@ -49,20 +55,18 @@ function OtogeComponent() {
 
     let stream: MediaStream | null = null;
     const startCamera = async () => {
-      try {
-        if (videoRef.current) {
-          stream = await navigator.mediaDevices.getUserMedia({
-            video: {
-              height: videoRef.current.clientHeight / 2,
-              width: videoRef.current.clientWidth / 2,
-              facingMode: "user",
-            },
-            audio: false,
-          });
-          videoRef.current.srcObject = stream;
-        }
-      } catch (err) {
-        console.error("Error accessing camera: ", err);
+      if (videoRef.current) {
+        const v = videoRef.current;
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            aspectRatio: v.clientWidth / v.clientHeight,
+            width: v.clientWidth,
+            height: v.clientHeight,
+            facingMode: "user",
+          },
+          audio: false,
+        });
+        v.srcObject = stream;
       }
     };
 
@@ -85,6 +89,8 @@ function OtogeComponent() {
     let drawingUtils: DrawingUtils | null = null;
     let rId: number;
     const predictWebcam = () => {
+      // streamが無かったら早期リターンしてmessage表示
+      if (!stream) return;
       // 手のランドマーク検出
       // videoとHandLandmarkerの準備ができているかつ前回と同じ時刻でない場合、検出する。
       if (
@@ -123,9 +129,9 @@ function OtogeComponent() {
             //   pannerNode.current.length,
             //   oscillatorNode.current.length,
             // );
-            gainNode.current[i].gain.rampTo(v * 2, 0);
-            pannerNode.current[i].pan.rampTo(p, 0);
-            oscillatorNode.current[i].frequency.rampTo(f, 0);
+            gainNode.current[i].gain.rampTo(v * 2, 0.1);
+            pannerNode.current[i].pan.rampTo(p, 0.1);
+            oscillatorNode.current[i].frequency.rampTo(f, 0.1);
             drawingUtils?.drawConnectors(
               landmarks,
               HandLandmarker.HAND_CONNECTIONS,
@@ -149,9 +155,12 @@ function OtogeComponent() {
       }
     };
     const start = async () => {
-      await startCamera();
-      await createHandLandmarker();
-      predictWebcam();
+      startCamera()
+        .then(createHandLandmarker)
+        .then(predictWebcam)
+        .catch(() => {
+          setMessage(t`⚠️初期化できなんだ`);
+        });
     };
     start();
 
@@ -180,7 +189,7 @@ function OtogeComponent() {
   }, []);
 
   return (
-    <div className="absolute inset-0 h-full w-full">
+    <div className="absolute inset-0 h-full w-full bg-black">
       <video
         ref={videoRef}
         autoPlay={true}
@@ -191,16 +200,35 @@ function OtogeComponent() {
       </video>
       <canvas
         ref={canvasRef}
-        className="absolute top-0 left-0 h-full w-full -scale-x-100"
+        className="absolute top-0 left-0 z-20 h-full w-full -scale-x-100"
       />
-      <button
-        type="button"
-        onClick={() => {
-          Tone.start();
-        }}
-      >
-        sound
-      </button>
+      <div className="absolute top-0 left-0 z-40 flex h-full w-full flex-col gap-2 p-2">
+        <div className="flex grow">
+          {message ? (
+            <span className="flex h-full w-full items-center justify-center rounded bg-white text-3xl">
+              {message}
+            </span>
+          ) : (
+            !enableSound && (
+              <button
+                type="button"
+                className="h-full w-full rounded bg-white text-3xl"
+                onClick={() => {
+                  Tone.start();
+                  setEnableSound(true);
+                }}
+              >
+                <span className="animate-bounce">👆</span>:🔇➡🔊
+              </button>
+            )
+          )}
+        </div>
+        <div>
+          <Link to="/" className="rounded bg-white text-2xl">
+            🔙
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
@@ -225,7 +253,7 @@ function calcVPF(landmarks: NormalizedLandmark[]) {
       (pinkyFingerTip.x - thumbTip.x) ** 2 +
       (pinkyFingerTip.y - thumbTip.y) ** 2,
   );
-  const v = Math.min(Math.max(0, d > 0.1 ? Math.round(d * r) / r : 0), 1);
+  const v = Math.min(Math.max(0, d > 0.2 ? Math.round(d * r) / r : 0), 1);
   const aX =
     (thumbTip.x +
       indexFingerTip.x +

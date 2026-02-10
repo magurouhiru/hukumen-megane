@@ -10,7 +10,7 @@ function RootComponent() {
   return (
     <>
       <div className="relative flex min-h-screen flex-col">
-        <header className="border-b p-2">
+        <header className="border-gray-800 border-b p-2">
           <nav className="container m-auto flex items-center justify-center">
             <Link to="/">
               <h1>
@@ -51,11 +51,15 @@ function RootComponent() {
                   </li>
                 </ul>
               </div>
+              <ul>
+                <li>
+                  <Link to="/privacy_policy">
+                    <h3>Privacy Policy</h3>
+                  </Link>
+                </li>
+              </ul>
             </div>
-            <div className="flex flex-wrap justify-between gap-4">
-              <Link to="/privacy_policy">privacy policy</Link>
-              <span>コピーライト</span>
-            </div>
+            <span className="text-center">コピーライト</span>
           </div>
         </footer>
       </div>
