@@ -180,7 +180,7 @@ function OtogeComponent() {
   }, []);
 
   return (
-    <div>
+    <div className="absolute inset-0 h-full w-full">
       <video
         ref={videoRef}
         autoPlay={true}

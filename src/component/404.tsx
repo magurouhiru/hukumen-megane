@@ -1,12 +1,7 @@
 import { Trans } from "@lingui/react/macro";
-import Layout from "./common/layout";
 
 function NotFound() {
-  return (
-    <Layout>
-      <Trans>404 - Not Found</Trans>
-    </Layout>
-  );
+  return <Trans>404 - Not Found</Trans>;
 }
 
 export default NotFound;
