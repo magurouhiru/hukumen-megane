@@ -4,7 +4,6 @@ import tailwindcss from "@tailwindcss/vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react-swc";
 import { defineConfig } from "vite";
-import { viteStaticCopy } from "vite-plugin-static-copy";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -22,15 +21,6 @@ export default defineConfig({
     }),
     react({
       plugins: [["@lingui/swc-plugin", {}]],
-    }),
-    // cdnからの方が早いけど、なんとなくローカルの方が安心するので
-    viteStaticCopy({
-      targets: [
-        {
-          src: "node_modules/@mediapipe/tasks-vision/wasm/*",
-          dest: "mediapipe/wasm",
-        },
-      ],
     }),
     lingui(),
     tailwindcss(),
