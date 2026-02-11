@@ -220,7 +220,10 @@ function OtogeComponent() {
                   setEnableSound(true);
                 }}
               >
-                <span className="animate-bounce">👆</span>:🔇➡🔊
+                <div className="flex justify-center">
+                  <div className="animate-bounce">👆</div>
+                  <span>:🔇➡🔊</span>
+                </div>
               </button>
             )
           )}
