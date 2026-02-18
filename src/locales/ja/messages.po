@@ -13,14 +13,10 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/component/404.tsx:7
+#: src/routes/otoge.tsx:162
+msgid "⚠️初期化できなんだ"
+msgstr "⚠️初期化できなんだ"
+
+#: src/component/404.tsx:4
 msgid "404 - Not Found"
 msgstr "404 - Not Found"
-
-#: src/component/common/layout.tsx:23
-msgid "My Application Footer"
-msgstr "My Application Footer"
-
-#: src/component/common/layout.tsx:11
-msgid "My Application Header"
-msgstr "My Application Header"

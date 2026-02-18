@@ -1,2 +1,30 @@
 /* tailwindcssを使用するため、基本的には何も書かない */
 @import "tailwindcss";
+
+@theme {
+  --animate-up-down: up-down 2s linear infinite;
+  @keyframes up-down {
+    0% {
+      transform: translateY(0);
+    }
+    25% {
+      transform: translateY(-100%);
+    }
+    75% {
+      transform: translateY(100%);
+    }
+  }
+
+  --animate-left-right: left-right 2s linear infinite;
+  @keyframes left-right {
+    0% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-100%);
+    }
+    75% {
+      transform: translateX(100%);
+    }
+  }
+}

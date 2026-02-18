@@ -1,1 +1,1 @@
-/*eslint-disable*/import type{Messages}from"@lingui/core";export const messages=JSON.parse("{\"+iq0WF\":[\"404 - Not Found\"],\"OzZX51\":[\"My Application Footer\"],\"cwTQNr\":[\"My Application Header\"]}")as Messages;
+/*eslint-disable*/import type{Messages}from"@lingui/core";export const messages=JSON.parse("{\"+iq0WF\":[\"404 - Not Found\"],\"wNCdU3\":[\"⚠️初期化できなんだ\"]}")as Messages;
