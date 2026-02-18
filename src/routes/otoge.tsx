@@ -59,9 +59,9 @@ function OtogeComponent() {
         const v = videoRef.current;
         stream = await navigator.mediaDevices.getUserMedia({
           video: {
-            aspectRatio: v.clientWidth / v.clientHeight,
-            width: v.clientWidth,
-            height: v.clientHeight,
+            aspectRatio: v.clientWidth > v.clientHeight ? 16 / 9 : 9 / 16,
+            width: v.clientWidth > v.clientHeight ? 1920 : 1080,
+            height: v.clientWidth > v.clientHeight ? 1080 : 1920,
             facingMode: "user",
           },
           audio: false,
@@ -218,7 +218,10 @@ function OtogeComponent() {
                   setEnableSound(true);
                 }}
               >
-                <span className="animate-bounce">👆</span>:🔇➡🔊
+                <div className="flex justify-center">
+                  <div className="animate-bounce">👆</div>
+                  <span>:🔇➡🔊</span>
+                </div>
               </button>
             )
           )}

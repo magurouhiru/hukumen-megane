@@ -9,7 +9,7 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <>
-      <div className="relative flex min-h-screen flex-col">
+      <div className="relative flex min-h-dvh flex-col">
         <header className="border-gray-800 border-b p-2">
           <nav className="container m-auto flex items-center justify-center">
             <Link to="/">

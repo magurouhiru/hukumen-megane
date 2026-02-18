@@ -7,7 +7,7 @@ export const Route = createFileRoute("/")({
 
 function HomeComponent() {
   return (
-    <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-4 sm:grid-cols-[repeat(auto-fit,200px)]">
+    <div className="grid grid-cols-2 gap-4 sm:grid-cols-[repeat(auto-fit,200px)]">
       <Link
         to="/otoge"
         className="grid aspect-square grid-cols-3 grid-rows-3 items-center justify-center rounded border border-gray-800 hover:shadow"
@@ -27,7 +27,6 @@ function HomeComponent() {
           ✋
         </span>
       </Link>
-      <div></div>
     </div>
   );
 }
