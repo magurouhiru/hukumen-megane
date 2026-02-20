@@ -14,8 +14,8 @@ msgstr ""
 "Plural-Forms: \n"
 
 #: src/routes/otoge.tsx:167
-msgid "⚠️初期化できなんだ"
-msgstr "⚠️初期化できなんだ"
+#~ msgid "⚠️初期化できなんだ"
+#~ msgstr "⚠️初期化できなんだ"
 
 #: src/component/404.tsx:4
 msgid "404 - Not Found"
