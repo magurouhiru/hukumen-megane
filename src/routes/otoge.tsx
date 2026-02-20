@@ -29,6 +29,11 @@ function OtogeComponent() {
   );
   const [message, setMessage] = useState("");
 
+  const [isDevMode, setIsDevMode] = useState(true);
+  const [fps, setFps] = useState(NaN);
+  const [width, setWidth] = useState(NaN);
+  const [height, setHeight] = useState(NaN);
+
   useEffect(() => {
     if (gainNode.current.length !== MAX_HAND) {
       console.log("new Gain");
@@ -103,6 +108,14 @@ function OtogeComponent() {
           videoRef.current,
           performance.now(),
         );
+      }
+
+      if (isDevMode && (!fps || !width || !height)) {
+        const settings = stream.getVideoTracks()[0].getSettings();
+        // console.log(settings);
+        if (settings.frameRate) setFps(settings.frameRate);
+        if (settings.width) setWidth(settings.width);
+        if (settings.height) setHeight(settings.height);
       }
 
       // canvasへの描画
@@ -203,6 +216,14 @@ function OtogeComponent() {
         className="absolute top-0 left-0 z-20 h-full w-full -scale-x-100"
       />
       <div className="absolute top-0 left-0 z-40 flex h-full w-full flex-col gap-2 p-2">
+        {isDevMode && (
+          <div>
+            <p>devmode</p>
+            <p>{fps}</p>
+            <p>{width}</p>
+            <p>{height}</p>
+          </div>
+        )}
         <div className="flex grow">
           {message ? (
             <span className="flex h-full w-full items-center justify-center rounded bg-white text-3xl">

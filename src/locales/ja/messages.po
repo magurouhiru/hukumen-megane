@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/routes/otoge.tsx:162
+#: src/routes/otoge.tsx:167
 msgid "⚠️初期化できなんだ"
 msgstr "⚠️初期化できなんだ"
 
